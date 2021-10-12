@@ -17,10 +17,6 @@ public class Ball : MonoBehaviour
         LaunchOnRandomDirection();
     }
 
-    private void OnBecameInvisible() {
-        RestartBall();
-    }
-
     private void LaunchOnRandomDirection(){
         _rigidBody.position = Vector2.zero;
         _rigidBody.velocity = Vector2.zero;
@@ -35,9 +31,24 @@ public class Ball : MonoBehaviour
         LaunchOnRandomDirection();
     }
 
-    private void OnCollisionEnter2D() {
+    private void OnCollisionEnter2D(Collision2D other) {
         FindObjectOfType<AudioManager>().Play("Hit");
-        _rigidBody.velocity *= 1.1f;
+        if (other.gameObject.CompareTag("Paddle")) {
+            _rigidBody.velocity *= 1.1f;
+            Debug.Log("Velocity increased");
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other) {
+        //play score sound
+        //Update score
+        if (other.gameObject.CompareTag("PlayerGoalZone")) 
+        //Update enemy score +1
+            GameManager.Instance.UpdateEnemyScore();
+        if (other.gameObject.CompareTag("EnemyGoalZone")) 
+        //Update player score+1 
+            GameManager.Instance.UpdatePlayerScore();
+        RestartBall();
     }
 
     

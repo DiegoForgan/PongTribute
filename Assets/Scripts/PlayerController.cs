@@ -18,6 +18,8 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         _playerMovement = Input.GetAxisRaw("Vertical");
+        if ( (_rigidBody.position.y < -3.3f && _playerMovement == -1)
+        || (_rigidBody.position.y > 3.3f && _playerMovement == 1) ) _playerMovement = 0f;
     }
 
     private void FixedUpdate() {

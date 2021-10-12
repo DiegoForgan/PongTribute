@@ -4,18 +4,16 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-    [SerializeField]
-    private float _movementSpeed;
+    [SerializeField] private float _movementSpeed;
     private Rigidbody2D _rigidBody;
-    [SerializeField]
-    private Transform ball;
+    [SerializeField] private Transform ball;
 
     private float movement;
 
     // Start is called before the first frame update
     void Start()
     {
-      _rigidBody = GetComponent<Rigidbody2D>();  
+        _rigidBody = GetComponent<Rigidbody2D>();  
     }
 
     // Update is called once per frame
