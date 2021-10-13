@@ -56,3 +56,9 @@ MonoBehaviour:
     pitch: 1
     loop: 1
     source: {fileID: 0}
+  - name: MenuTheme
+    clip: {fileID: 8300000, guid: 69e536867d79568499a825bb5033d8c7, type: 3}
+    volume: 0.2
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}

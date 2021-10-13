@@ -12,7 +12,6 @@ public class Ball : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        FindObjectOfType<AudioManager>().Play("GameTheme");
         _rigidBody = GetComponent<Rigidbody2D>();
         LaunchOnRandomDirection();
     }
@@ -21,10 +20,11 @@ public class Ball : MonoBehaviour
         _rigidBody.position = Vector2.zero;
         _rigidBody.velocity = Vector2.zero;
         
-        int randomDirection = 0;
-        while(randomDirection == 0) randomDirection = Random.Range(-1,2);
-         
-        _rigidBody.AddForce(new Vector2(Random.Range(1,2),Random.Range(1,2))*_forceMultiplier*randomDirection,ForceMode2D.Impulse);
+        int randomDirection = (Random.Range(0,2) == 0) ? 1 : -1;
+        int randomX = (Random.Range(0,2) == 0) ? 1 : -1;
+        int randomY = (Random.Range(0,2) == 0) ? 1 : -1;
+
+        _rigidBody.AddForce(new Vector2(randomX,randomY)*_forceMultiplier*randomDirection,ForceMode2D.Impulse);
     }
 
     private void RestartBall(){
@@ -42,14 +42,27 @@ public class Ball : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other) {
         //play score sound
         //Update score
+        int direction = 0;
         if (other.gameObject.CompareTag("PlayerGoalZone")) 
-        //Update enemy score +1
+        {//Update enemy score +1
             GameManager.Instance.UpdateEnemyScore();
+            direction = 1;
+        }
         if (other.gameObject.CompareTag("EnemyGoalZone")) 
-        //Update player score+1 
+        {//Update player score+1 
             GameManager.Instance.UpdatePlayerScore();
-        RestartBall();
+            direction = -1;
+        }
+        LaunchToDirection(direction);    
     }
 
-    
+    private void LaunchToDirection(int direction)
+    {
+        _rigidBody.position = Vector2.zero;
+        _rigidBody.velocity = Vector2.zero;
+        
+        int randomY = (Random.Range(0,2) == 0) ? 1 : -1;
+
+        _rigidBody.AddForce(new Vector2(direction,randomY)*_forceMultiplier,ForceMode2D.Impulse);
+    }
 }
